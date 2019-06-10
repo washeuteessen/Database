@@ -1,0 +1,15 @@
+## Schema Validation for Scraped_URLs
+
+{ 
+    "$jsonSchema" : {
+        "bsonType" : "object", 
+        "required" : [
+            "Recipe_url", 
+            "Search_url", 
+            "Source_id", 
+            "datetime"
+        ]
+    }
+}
+
+## Schema Validation for Scraped_URLs
