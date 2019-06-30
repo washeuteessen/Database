@@ -1,25 +1,15 @@
-## Schema Validation for Collection Scraped_URLs
+# Create view to find unparsed recipes
 
-{ 
-    "$jsonSchema" : {
-        "bsonType" : "object", 
-        "required" : [
-            "Recipe_url", 
-            "Search_url", 
-            "Source_id", 
-            "datetime"
-        ]
-    }
-}
-
-# Create View Pipeline
-# Find unparsed recipes
-
-# Pipeline in General
 db.createView(
+    # name of view
 	"unparsedURLS",
+
+    # name source collection
 	"recipes_raw",
+
+    # pipeline
     [
+        # step 1: join with other collection
         { 
             "$lookup" : {
                 "from" : "recipes_parsed", 
@@ -28,6 +18,8 @@ db.createView(
                 "as" : "recipes_parsed_raw"
             }
         }, 
+
+        # step 2: define which elements to keep and create
         { 
             "$project" : {
                 "url" : 1.0, 
@@ -38,13 +30,16 @@ db.createView(
                     ]
                 }
             }
-        }, 
+        },
+
+        # step 3: exclude ealready parsed elements by filtering
         { 
             "$match" : {
                 "AlreadyParsed" : false
             }
         }
     ], 
+
     { 
         "allowDiskUse" : false
     }
