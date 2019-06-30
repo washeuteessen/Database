@@ -1,4 +1,4 @@
-## Schema Validation for Scraped_URLs
+## Schema Validation for Collection Scraped_URLs
 
 { 
     "$jsonSchema" : {
@@ -12,4 +12,40 @@
     }
 }
 
-## Schema Validation for Scraped_URLs
+# Create View Pipeline
+# Find unparsed recipes
+
+# Pipeline in General
+db.createView(
+	"unparsedURLS",
+	"recipes_raw",
+    [
+        { 
+            "$lookup" : {
+                "from" : "recipes_parsed", 
+                "localField" : "url", 
+                "foreignField" : "url", 
+                "as" : "recipes_parsed_raw"
+            }
+        }, 
+        { 
+            "$project" : {
+                "url" : 1.0, 
+                "domain" : 1.0, 
+                "AlreadyParsed" : {
+                    "$anyElementTrue" : [
+                        "$recipes_parsed_raw"
+                    ]
+                }
+            }
+        }, 
+        { 
+            "$match" : {
+                "AlreadyParsed" : false
+            }
+        }
+    ], 
+    { 
+        "allowDiskUse" : false
+    }
+);
