@@ -1,0 +1,20 @@
+db.recipes.aggregate([
+    {
+        $match: {
+            domain: { $not: {$size: 0} }
+        }
+    },
+    { $unwind: "$domain" },
+    {
+        $group: {
+            _id: {$toLower: '$domain'},
+            count: { $sum: 1 }
+        }
+    },
+    {
+        $match: {
+            count: { $gte: 2 }
+        }
+    },
+    { $sort : { count : -1} }
+])
