@@ -12,7 +12,7 @@ db.createView(
         # step 1: join with other collection
         { 
             "$lookup" : {
-                "from" : "recipes_parsed", 
+                "from" : "recipes", 
                 "localField" : "url", 
                 "foreignField" : "url", 
                 "as" : "recipes_parsed_raw"
@@ -23,7 +23,8 @@ db.createView(
         { 
             "$project" : {
                 "url" : 1.0, 
-                "domain" : 1.0, 
+                "domain" : 1.0,
+		"htmlbody" : 1.0, 
                 "AlreadyParsed" : {
                     "$anyElementTrue" : [
                         "$recipes_parsed_raw"
