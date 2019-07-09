@@ -1,21 +1,27 @@
+# Define pipeline to show number of recipe documents per domain
+
 db.recipes.aggregate([
     {
+	# take only domains with at least one document
         $match: {
             domain: { $not: {$size: 0} }
         }
     },
     { $unwind: "$domain" },
     {
+	# only use lower case letters
         $group: {
             _id: {$toLower: '$domain'},
             count: { $sum: 1 }
         }
     },
     {
+	# only use domain with at least a count of 2
         $match: {
             count: { $gte: 2 }
         }
     },
+	# sort ascending
     { $sort : { count : -1} }
 ])
 

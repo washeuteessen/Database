@@ -1,3 +1,20 @@
+# show all duplicates
+db.recipes.aggregate([
+# group by number of docs per url
+    {$group: {
+        _id: {url: "$url"},
+        uniqueIds: {$addToSet: "$_id"},
+        count: {$sum: 1}
+        }
+    },
+# only show url with more than one count
+    {$match: { 
+        count: {"$gt": 1}
+        }
+    }
+]);
+
+
 db.recipes.aggregate([
     {$group: {
         _id: {url: "$url"},
