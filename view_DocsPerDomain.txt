@@ -26,8 +26,11 @@ db.recipes.aggregate([
 ])
 
 db.createView(
+# Name of View
 	"DocsPerDomain",
+# Name of collection
 	"recipes",
+# Pipeline form above 
     [
     {
         $match: {
