@@ -1,3 +1,4 @@
+# Pipeline
 # Create view to find unparsed recipes
 db.recipes.aggregate({
 [
@@ -33,7 +34,7 @@ db.recipes.aggregate({
         }
     ]
 })
-
+#View
 db.createView(
     # name of view
 	"unparsedURLS",

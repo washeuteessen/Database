@@ -1,3 +1,4 @@
+# Pipeline
 # Define pipeline to show number of recipe documents per domain
 
 db.recipes.aggregate([
@@ -24,6 +25,8 @@ db.recipes.aggregate([
 	# sort ascending
     { $sort : { count : -1} }
 ])
+
+#View
 
 db.createView(
 # Name of View

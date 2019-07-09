@@ -1,3 +1,4 @@
+# Pipeline
 # show all duplicates
 db.recipes.aggregate([
 # group by number of docs per url

@@ -1,3 +1,4 @@
+# Pipeline
 # find alle duplicates by url
 db.yourCollection.aggregate([
 # count number of documents per url
@@ -14,7 +15,7 @@ db.yourCollection.aggregate([
     db.yourCollection.remove({ "_id": {"$in": doc.dups }});
 })
 
-
+# Pipeline
 db.yourCollection.aggregate([
     { "$group": {
         "_id": { "url": "$url" },
