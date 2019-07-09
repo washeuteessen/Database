@@ -1,0 +1,11 @@
+db.yourCollection.aggregate([
+    { "$group": {
+        "_id": { "url": "$url" },
+        "dups": { "$push": "$_id" },
+        "count": { "$sum": 1 }
+    }},
+    { "$match": { "count": { "$gt": 1 } }}
+]).forEach(function(doc) {
+    doc.dups.shift();
+    db.yourCollection.remove({ "_id": {"$in": doc.dups }});
+})

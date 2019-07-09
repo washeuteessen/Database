@@ -1,0 +1,1 @@
+mongoexport --db recipes --collection recipes --out recipes.json
