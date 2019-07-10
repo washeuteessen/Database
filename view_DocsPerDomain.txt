@@ -1,30 +1,20 @@
 # Pipeline
 # Define pipeline to show number of recipe documents per domain
 
-db.recipes.aggregate([
+# Call aggregate function for the pipeline
+db.recipes.aggregate(
+    [
     {
-	# take only domains with at least one document
-        $match: {
-            domain: { $not: {$size: 0} }
-        }
-    },
-    { $unwind: "$domain" },
-    {
-	# only use lower case letters
+# Group by _id = "domain" with new field count, which is defined as the function $sum
         $group: {
-            _id: {$toLower: '$domain'},
+            _id: '$domain',
             count: { $sum: 1 }
         }
     },
-    {
-	# only use domain with at least a count of 2
-        $match: {
-            count: { $gte: 2 }
-        }
-    },
-	# sort ascending
+# Sort the output descending by the field count
     { $sort : { count : -1} }
-])
+    ]
+)
 
 #View
 
@@ -33,24 +23,15 @@ db.createView(
 	"DocsPerDomain",
 # Name of collection
 	"recipes",
-# Pipeline form above 
     [
     {
-        $match: {
-            domain: { $not: {$size: 0} }
-        }
-    },
-    { $unwind: "$domain" },
-    {
+# Group by _id = "domain" with new field count, which is defined as the function $sum
         $group: {
-            _id: {$toLower: '$domain'},
+            _id: '$domain',
             count: { $sum: 1 }
         }
     },
-    {
-        $match: {
-            count: { $gte: 2 }
-        }
-    },
+# Sort the output descending by the field count
     { $sort : { count : -1} }
-]);
+    ]
+)
