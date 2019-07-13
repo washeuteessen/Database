@@ -1,8 +1,8 @@
-# Pipeline
-# Create view to find unparsed recipes
+//Pipeline
+//Create view to find unparsed recipes
 db.recipes.aggregate({
 [
-        # step 1: join with other collection
+        //step 1: join with other collection
         { 
             "$lookup" : {
                 "from" : "recipes", 
@@ -12,7 +12,7 @@ db.recipes.aggregate({
             }
         }, 
 
-        # step 2: define which elements to keep and create
+        //step 2: define which elements to keep and create
         { 
             "$project" : {
                 "url" : 1.0, 
@@ -26,7 +26,7 @@ db.recipes.aggregate({
             }
         },
 
-        # step 3: exclude ealready parsed elements by filtering
+        //step 3: exclude ealready parsed elements by filtering
         { 
             "$match" : {
                 "AlreadyParsed" : false
@@ -34,17 +34,18 @@ db.recipes.aggregate({
         }
     ]
 })
-#View
+
+//View
 db.createView(
-    # name of view
+    //name of view
 	"unparsedURLS",
 
-    # name source collection
+    //name source collection
 	"recipes_raw",
 
-    # pipeline
+    //pipeline
     [
-        # step 1: join with other collection
+        //step 1: join with other collection
         { 
             "$lookup" : {
                 "from" : "recipes", 
@@ -54,7 +55,7 @@ db.createView(
             }
         }, 
 
-        # step 2: define which elements to keep and create
+        //step 2: define which elements to keep and create
         { 
             "$project" : {
                 "url" : 1.0, 
@@ -68,7 +69,7 @@ db.createView(
             }
         },
 
-        # step 3: exclude ealready parsed elements by filtering
+        //step 3: exclude ealready parsed elements by filtering
         { 
             "$match" : {
                 "AlreadyParsed" : false
