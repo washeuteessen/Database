@@ -24,3 +24,23 @@ mongodump --out /data/db
 ```
 oc cp mongo-2-6v94s:/data/db/dump/ ../dump/
 ```
+
+3. Start docker
+
+console:
+```
+docker run -p 27017:27017 mongo
+```
+
+4. copy dump into container
+
+console in dump dir
+```
+docker cp .\dump\. NAMEOFDOCKER:\dump
+```
+
+5. Restore dump
+console in dump dir
+```
+mongorestore .\dump
+```
