@@ -25,22 +25,35 @@ mongodump --out /data/db
 oc cp mongo-2-6v94s:/data/db/dump/ ../dump/
 ```
 
-3. Start docker
+3. Build Docker Image
 
-console:
+
+console to git dir ./Other:
 ```
-docker run -p 27017:27017 mongo
+docker build .
 ```
 
-4. copy dump into container
+4. Start image
 
-console in dump dir
+Get name of docker in console
 ```
-docker cp .\dump\. NAMEOFDOCKER:\dump
+docker container ls
+```
+
+```
+docker run -p 27017:27017 IMAGENAME
 ```
 
 5. Restore dump
-console in dump dir
+
+Get Name of Docker
 ```
-mongorestore .\dump
+docker ps
 ```
+
+Restore Dump
+```
+docker exec -it NAMEOFDOCKER mongorestore ./dump
+```
+
+
