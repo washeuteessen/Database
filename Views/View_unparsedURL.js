@@ -1,6 +1,6 @@
 //Pipeline
 //Create view to find unparsed recipes
-db.recipes.aggregate({
+db.recipes.aggregate(
 [
         //step 1: join with other collection
         { 
@@ -33,7 +33,7 @@ db.recipes.aggregate({
             }
         }
     ]
-})
+)
 
 //View
 db.createView(
