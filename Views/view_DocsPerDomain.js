@@ -7,6 +7,14 @@
 //Pipeline
 //Define pipeline to show number of recipe documents per domain
 
+// Create Index for domain field for improved speed
+db.recipes.createIndex(
+    // Create an Index on the Field domain in ascending order
+    {"domain":1},
+    // Set the name of the new index
+    {name: "recipe_domains"}
+)
+
 //Call aggregate function for the pipeline
 db.recipes.aggregate(
     [
@@ -53,6 +61,15 @@ db.createView(
 )
 
 // View for collection recipes_raw
+
+// Create Index for domain field for improved speed
+db.recipes_raw.createIndex(
+    // Create an Index on the Field domain in ascending order
+    {"domain":1},
+    // Set the name of the new index
+    {name: "recipe_domains"}
+)
+
 
 db.createView(
     //Name of View
